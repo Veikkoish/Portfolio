@@ -1,0 +1,27 @@
+---
+import type { Category } from '../config/colors';
+import { categoryColors } from '../config/colors';
+
+interface Props {
+  name: string;
+  category: Exclude<Category, 'all'>;
+}
+
+const { name, category } = Astro.props;
+const color = categoryColors[category];
+---
+
+<span
+  class="skill-tag px-4 py-1.5 rounded-full text-sm font-medium"
+  style={`background-color: ${color}20; color: ${color}; border: 1px solid ${color}40;`}
+>
+  {name}
+</span>
+
+<style>
+  .skill-tag {
+    display: inline-block;
+    white-space: nowrap;
+  }
+</style>
+

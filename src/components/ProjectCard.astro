@@ -1,0 +1,123 @@
+---
+import type { Category } from '../config/colors';
+import SkillTag from './SkillTag.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  category: Category[];
+  skills: { name: string; category: Exclude<Category, 'all'> }[];
+  year: number | string;
+  video?: string;
+  inProgress?: boolean;
+  slug: string;
+}
+
+const { title, description, image, category, skills, year, video, inProgress, slug } = Astro.props;
+const categoryString = category.join(',');
+const skillCategories = skills.map(s => s.category).join(',');
+---
+
+<a
+  id={slug}
+  href={`${import.meta.env.BASE_URL}/${slug}`}
+  class="project-card w-[70vw] h-[70vh] mx-auto my-8 rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer relative block scroll-mt-32"
+  data-categories={categoryString}
+  data-skill-categories={skillCategories}
+>
+  <div class="absolute top-6 right-6 text-base text-gray-400" style="font-family: 'Inter', sans-serif;">
+    {year}{inProgress ? ' (in progress)' : ''}
+  </div>
+  <div class="flex h-full px-12 py-8 gap-8">
+    <div class="w-1/2 flex items-center justify-center">
+      {video ? (
+        <video
+          src={video}
+          muted
+          playsinline
+          preload="none"
+          class="max-w-full max-h-full object-contain video-transparent project-video"
+          data-video-src={video}
+        ></video>
+      ) : (
+        <img src={image} alt={title} class="max-w-full max-h-full object-contain" />
+      )}
+    </div>
+    <div class="w-1/2 flex flex-col justify-center gap-4">
+      <h2 class="text-4xl font-bold" style="font-family: 'Faculty Glyphic', sans-serif;">
+        {title}
+      </h2>
+      <p class="text-lg text-gray-400 leading-relaxed">
+        {description}
+      </p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {skills.map((skill) => (
+          <SkillTag name={skill.name} category={skill.category} />
+        ))}
+      </div>
+    </div>
+  </div>
+</a>
+
+<style>
+  .project-card {
+    background-color: var(--color-bg-dark);
+    border: 3px solid rgb(99, 99, 99);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+  }
+
+  .project-card:focus {
+    outline: none;
+  }
+
+  .project-card:hover {
+    transform: scale(1.02);
+    border-color: rgb(150, 150, 150);
+  }
+
+  .project-card.hidden {
+    display: none;
+  }
+
+  .video-transparent {
+    background: transparent !important;
+    mix-blend-mode: normal;
+  }
+
+  video.video-transparent {
+    background-color: transparent;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const videos = document.querySelectorAll('.project-video');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const video = entry.target;
+          if (!video.hasAttribute('data-played')) {
+            video.setAttribute('data-played', 'true');
+            setTimeout(() => {
+              video.play().catch(() => {
+                // Ignore play errors (e.g., if user hasn't interacted with page)
+              });
+            }, 500);
+          }
+        }
+      });
+    }, {
+      threshold: 0.5 // Trigger when 50% of video is visible
+    });
+    
+    videos.forEach((video) => {
+      observer.observe(video);
+    });
+  });
+</script>
+

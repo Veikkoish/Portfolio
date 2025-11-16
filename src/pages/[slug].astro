@@ -1,0 +1,292 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { projects } from '../config/projects';
+import SkillTag from '../components/SkillTag.astro';
+
+export async function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const isGoKart = project.slug === 'go-kart-v2';
+const isRoboChess = project.slug === 'robochess';
+const isOmniframe = project.slug === 'omniframe';
+const BASE_URL = import.meta.env.BASE_URL;
+
+// Gallery images for Go-Kart
+const goKartImages = [
+  '20190707_134935.webp',
+  '20190707_134943.webp',
+  '20190707_134954.webp',
+  '20190707_135023.webp',
+  '20190707_135027.webp',
+  '20190707_135041.webp',
+];
+
+// Gallery images for RoboChess
+const roboChessImages = [
+  'front.jpg',
+  'rightup.jpg',
+  'showcase.jpg',
+  'switch.jpg',
+  'presentation.jpg',
+  'award.jpg',
+];
+
+// Process media for RoboChess
+const roboChessProcess = [
+  { file: 'early_render.jpg', caption: 'Early render of showing the gantry and rough hardware placement.', type: 'image', fullSize: true },
+  { file: 'tape.jpg', caption: 'The dark squares were made by applying wood filler to laser-engraved grooves. The tape was for protecting other areas.', type: 'image', fullSize: false },
+  { file: 'assembly.jpg', caption: 'Hardware getting assembled', type: 'image', fullSize: false },
+  { file: 'Sensor_array.jpg', caption: 'The hall-effect sensor matrix was installed under the pieces to detect piece locations to enable more game-modes.', type: 'image', fullSize: false },
+  { file: 'calibration.mp4', caption: 'Calibration test of the assembled gantry before placement to the enclosure. The board uses limit switches to zero its axis at every boot up similar to a 3D-printer.', type: 'video', fullSize: false },
+];
+---
+
+<Layout title={project.title}>
+  <main class="container mx-auto px-8 py-12">
+    <!-- Header -->
+    <div class="max-w-6xl mx-auto mb-12">
+      <h1 class="text-5xl font-bold mb-4" style="font-family: 'Faculty Glyphic', sans-serif;">
+        {project.title}
+      </h1>
+      <p class="text-xl text-gray-400">
+        {project.year}{project.inProgress ? ' (in progress)' : ''}
+      </p>
+    </div>
+
+    <!-- Menu -->
+    <div class="flex justify-center gap-4 mb-16">
+      <button class="menu-btn active" data-section="overview">Overview</button>
+      {!isGoKart && <button class="menu-btn" data-section="technology">Technology</button>}
+      {!isGoKart && <button class="menu-btn" data-section="process">Process</button>}
+      <button class="menu-btn" data-section="gallery">Gallery</button>
+    </div>
+
+    <div class="max-w-6xl mx-auto space-y-24">
+      <!-- Overview Section -->
+      <section id="overview" class="section-content scroll-mt-32">
+        <div class="space-y-16">
+          {project.overview ? (
+            project.overview.map((section) => (
+              section.image ? (
+                <div class={`flex gap-12 items-center ${section.imagePosition === 'right' ? 'flex-row-reverse' : ''}`}>
+                  <div class="w-1/2">
+                    <img src={section.image} alt={project.title} class="rounded-2xl w-full" />
+                  </div>
+                  <div class="w-1/2">
+                    <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+                      {section.description}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+                    {section.description}
+                  </p>
+                </div>
+              )
+            ))
+          ) : (
+            <div class="flex gap-12 items-center">
+              <div class="w-1/2">
+                <img src={project.image} alt={project.title} class="rounded-2xl w-full" />
+              </div>
+              <div class="w-1/2">
+                <p class="text-lg text-gray-300 leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <!-- Technology Section -->
+      {!isGoKart && (
+        <section id="technology" class="section-content scroll-mt-32">
+          <div class="flex flex-wrap gap-3 mb-12">
+            {project.skills.map((skill) => (
+              <SkillTag name={skill.name} category={skill.category} />
+            ))}
+          </div>
+          {isRoboChess ? (
+            <>
+              <p class="text-lg text-gray-300 leading-relaxed mb-8">
+                The board uses an Arduino Mega 2560 to communicate with a mobile phone via Bluetooth to get the voice commands for players' moves. The pieces are moved by a magnet that moves on a 2D-Gantry featuring low-profile stepper motors, timing belts, and servo-attached magnet that moves vertically to engage with the pieces. Early iterations used an electromagnet but the permanent magnet system was found to be smoother and more reliable. To enable users to also use manual moves instead of playing with only voice, a hall-effect sensor matrix was added directly under the pieces.
+              </p>
+              <h3 class="text-xl font-bold mb-4" style="font-family: 'Faculty Glyphic', sans-serif;">
+                Hardware System Diagram
+              </h3>
+              <div class="mt-8 flex justify-center">
+                <img
+                  src={`${BASE_URL}/public/RoboChess/Robo_diagram.png`}
+                  alt="RoboChess System Diagram"
+                  class="rounded-2xl w-[70%]"
+                />
+              </div>
+            </>
+          ) : isOmniframe ? (
+            <>
+              <h3 class="text-xl font-bold mb-6" style="font-family: 'Faculty Glyphic', sans-serif;">
+                Specifications
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-lg">
+                <div class="space-y-6">
+                  <div>
+                    <h4 class="text-lg font-semibold mb-2 text-gray-200">Display</h4>
+                    <ul class="space-y-1 text-gray-300">
+                      <li><span class="text-gray-400">Size:</span> 13.3 inches (27 x 20 cm)</li>
+                      <li><span class="text-gray-400">Resolution:</span> 1600 x 1200 pixels</li>
+                      <li><span class="text-gray-400">Grayscale Depth:</span> 256 shades</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 class="text-lg font-semibold mb-2 text-gray-200">Frame</h4>
+                    <ul class="space-y-1 text-gray-300">
+                      <li><span class="text-gray-400">Measurements:</span> 17 x 14 inches (44 x 36 cm)</li>
+                      <li><span class="text-gray-400">Material:</span> Acacia hardwood</li>
+                      <li><span class="text-gray-400">Mounting:</span> Rotating wall mount</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="space-y-6">
+                  <div>
+                    <h4 class="text-lg font-semibold mb-2 text-gray-200">Energy</h4>
+                    <ul class="space-y-1 text-gray-300">
+                      <li><span class="text-gray-400">Battery Capacity:</span> 12,000 mAh</li>
+                      <li><span class="text-gray-400">Battery Life:</span> Over 1 year</li>
+                      <li><span class="text-gray-400">Charging Port:</span> USB-C</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 class="text-lg font-semibold mb-2 text-gray-200">Other Features</h4>
+                    <ul class="space-y-1 text-gray-300">
+                      <li><span class="text-gray-400">Connectivity:</span> Wi-Fi and Bluetooth LE</li>
+                      <li><span class="text-gray-400">Internal Storage:</span> 4 GB</li>
+                      <li><span class="text-gray-400">Buttons:</span> Sync and Reset</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <p class="text-gray-400">Technical details and diagrams coming soon.</p>
+          )}
+        </section>
+      )}
+
+      <!-- Process Section -->
+      {!isGoKart && (
+        <section id="process" class="section-content scroll-mt-32">
+          <h2 class="text-3xl font-bold mb-8" style="font-family: 'Faculty Glyphic', sans-serif;">
+            Process
+          </h2>
+          {isRoboChess ? (
+            <>
+              <p class="text-lg text-gray-300 leading-relaxed mb-8">
+                Unfortunately, this project was poorly documented. The design and fabrication of this project was completed in full between October and December of 2022.
+              </p>
+              <div class="grid grid-cols-2 gap-6">
+                {roboChessProcess.map((item) => (
+                  <div class={`space-y-2 ${item.fullSize ? '' : 'flex flex-col items-center'}`}>
+                    {item.type === 'video' ? (
+                      <video
+                        src={`${BASE_URL}/public/RoboChess/${item.file}`}
+                        controls
+                        class={`rounded-2xl ${item.fullSize ? 'w-full' : 'w-[70%]'}`}
+                      ></video>
+                    ) : (
+                      <img
+                        src={`${BASE_URL}/public/RoboChess/${item.file}`}
+                        alt={item.caption}
+                        class={`rounded-2xl ${item.fullSize ? 'w-full' : 'w-[70%]'}`}
+                      />
+                    )}
+                    <p class="text-sm text-gray-400 text-center">{item.caption}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <p class="text-gray-400">Assembly photos and development process coming soon.</p>
+          )}
+        </section>
+      )}
+
+      <!-- Gallery Section -->
+      <section id="gallery" class="section-content scroll-mt-32">
+        <h2 class="text-3xl font-bold mb-8" style="font-family: 'Faculty Glyphic', sans-serif;">
+          Gallery
+        </h2>
+        {isGoKart ? (
+          <div class="grid grid-cols-2 gap-6">
+            {goKartImages.map((img) => (
+              <img
+                src={`${BASE_URL}/public/Go-Kart V2/${img}`}
+                alt={`Go-Kart ${img}`}
+                class="rounded-2xl w-full"
+              />
+            ))}
+          </div>
+        ) : isRoboChess ? (
+          <div class="grid grid-cols-2 gap-6">
+            {roboChessImages.map((img) => (
+              <img
+                src={`${BASE_URL}/public/RoboChess/${img}`}
+                alt={`RoboChess ${img}`}
+                class="rounded-2xl w-full"
+              />
+            ))}
+          </div>
+        ) : (
+          <p class="text-gray-400">Gallery images coming soon.</p>
+        )}
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .menu-btn {
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .menu-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .menu-btn.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuButtons = document.querySelectorAll('.menu-btn');
+
+    menuButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const sectionId = button.getAttribute('data-section');
+        const section = document.getElementById(sectionId);
+
+        // Update active button
+        menuButtons.forEach((btn) => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        // Scroll to section
+        section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  });
+</script>

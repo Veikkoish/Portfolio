@@ -1,0 +1,55 @@
+---
+import type { Category } from '../config/colors';
+
+interface Props {
+  category: Category;
+  label: string;
+  color?: string;
+}
+
+const { category, label, color } = Astro.props;
+---
+
+<button
+  class="filter-btn px-6 py-2 rounded-full font-medium transition-all duration-300 hover:scale-105"
+  data-category={category}
+  style={color ? `--btn-color: ${color}` : undefined}
+>
+  {label}
+</button>
+
+<style>
+  .filter-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid transparent;
+  }
+
+  .filter-btn[data-category="hardware"]:hover,
+  .filter-btn[data-category="hardware"].active {
+    background-color: var(--color-hardware);
+    box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
+  }
+
+  .filter-btn[data-category="software"]:hover,
+  .filter-btn[data-category="software"].active {
+    background-color: var(--color-software);
+    color: #000;
+    box-shadow: 0 4px 20px rgba(0, 255, 102, 0.4);
+  }
+
+  .filter-btn[data-category="mechanical"]:hover,
+  .filter-btn[data-category="mechanical"].active {
+    background-color: var(--color-mechanical);
+    box-shadow: 0 4px 20px rgba(255, 102, 0, 0.4);
+  }
+
+  .filter-btn[data-category="all"].active {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--color-text);
+  }
+
+  .filter-btn.active {
+    transform: scale(1.05);
+  }
+</style>
+
