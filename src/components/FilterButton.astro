@@ -27,20 +27,20 @@ const { category, label, color } = Astro.props;
   .filter-btn[data-category="hardware"]:hover,
   .filter-btn[data-category="hardware"].active {
     background-color: var(--color-hardware);
-    box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
+    box-shadow: 0 2px 12px rgba(0, 102, 255, 0.25);
   }
 
   .filter-btn[data-category="software"]:hover,
   .filter-btn[data-category="software"].active {
     background-color: var(--color-software);
     color: #000;
-    box-shadow: 0 4px 20px rgba(0, 255, 102, 0.4);
+    box-shadow: 0 2px 12px rgba(0, 204, 82, 0.25);
   }
 
   .filter-btn[data-category="mechanical"]:hover,
   .filter-btn[data-category="mechanical"].active {
     background-color: var(--color-mechanical);
-    box-shadow: 0 4px 20px rgba(255, 102, 0, 0.4);
+    box-shadow: 0 2px 12px rgba(255, 102, 0, 0.25);
   }
 
   .filter-btn[data-category="all"].active {
