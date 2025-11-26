@@ -8,13 +8,14 @@ interface Props {
   image: string;
   category: Category[];
   skills: { name: string; category: Exclude<Category, 'all'> }[];
+  projectType: 'Academic Group Project' | 'Personal Project';
   year: number | string;
   video?: string;
   inProgress?: boolean;
   slug: string;
 }
 
-const { title, description, image, category, skills, year, video, inProgress, slug } = Astro.props;
+const { title, description, image, category, skills, projectType, year, video, inProgress, slug } = Astro.props;
 const categoryString = category.join(',');
 const skillCategories = skills.map(s => s.category).join(',');
 ---
@@ -27,7 +28,7 @@ const skillCategories = skills.map(s => s.category).join(',');
   data-skill-categories={skillCategories}
 >
   <div class="absolute top-6 right-6 text-base text-gray-400" style="font-family: 'Inter', sans-serif;">
-    {year}{inProgress ? ' (in progress)' : ''}
+    {projectType} • {year}{inProgress ? ' (in progress)' : ''}
   </div>
   <div class="flex px-12 py-16 gap-8">
     <div class="w-1/2 flex items-center justify-center">

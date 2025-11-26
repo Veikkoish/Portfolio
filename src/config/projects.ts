@@ -12,6 +12,7 @@ export interface Project {
   image: string;
   category: Category[];
   skills: { name: string; category: Exclude<Category, 'all'> }[];
+  projectType: 'Academic Group Project' | 'Personal Project';
   year: number | string;
   inProgress?: boolean;
   video?: string;
@@ -47,6 +48,7 @@ export const projects: Project[] = [
     image: publicPath('Omniframe/placeholder.webp'),
     video: publicPath('Omniframe/omniframe.webm'),
     category: ['hardware', 'software', 'mechanical'],
+    projectType: 'Personal Project',
     skills: [
       { name: 'Embedded Systems', category: 'hardware' },
       { name: 'PCB Design', category: 'hardware' },
@@ -88,6 +90,7 @@ export const projects: Project[] = [
     description: 'Voice-controlled chess board with robotic piece movement. A magnet moving inside the board make the pieces slide on the surface. \n\n Winner of RAD engineering showcase at NYU.',
     image: publicPath('RoboChess/RoboChess Render.webp'),
     category: ['hardware', 'software', 'mechanical'],
+    projectType: 'Academic Group Project',
     skills: [
       { name: 'Embedded Systems', category: 'hardware' },
       { name: 'Arduino Mega 2560', category: 'hardware' },
@@ -118,6 +121,7 @@ export const projects: Project[] = [
     description: 'Anniversary gift for my girlfriend: a tiny e-ink device that each day displays a new memory from the past year.',
     image: publicPath('Pocket Veila/cover.webp'),
     category: ['hardware', 'software', 'mechanical'],
+    projectType: 'Personal Project',
     skills: [
       { name: 'Embedded Systems', category: 'hardware' },
       { name: 'RP2040', category: 'hardware' },
@@ -139,6 +143,7 @@ export const projects: Project[] = [
     description: 'My first audio engineering project: a battery-powered 60W bluetooth speaker with a walnut enclosure and magnetically attached front grill with an abstract design.',
     image: publicPath('Vitrail/cover.webp'),
     category: ['hardware', 'mechanical'],
+    projectType: 'Personal Project',
     skills: [
       { name: 'System Integration', category: 'hardware' },
       { name: 'Power Management', category: 'hardware' },
@@ -160,6 +165,7 @@ export const projects: Project[] = [
     description: 'Arguably the most over-engineered table lamp ever. It dims by changing the number of windows that are lit up.',
     image: publicPath('Lampiron/placeholder.webp'),
     category: ['hardware', 'mechanical', 'software'],
+    projectType: 'Personal Project',
     skills: [
       { name: 'Embedded Systems', category: 'hardware' },
       { name: 'PCB Design', category: 'hardware' },
@@ -193,6 +199,7 @@ export const projects: Project[] = [
     image: publicPath('Hey Mac/placeholder.webp'),
     video: publicPath('Hey Mac/cover.webm'),
     category: ['software', 'hardware'],
+    projectType: 'Personal Project',
     skills: [
       { name: 'IOS App Development', category: 'software' },
       { name: 'Swift', category: 'software' },
@@ -217,6 +224,7 @@ export const projects: Project[] = [
     description: 'A simulation platform for discovering non-silicon solar chemistries through multi-stage analysis of molecular databases. The system evaluates synthesizability and other metrics, runs particle simulations to predict performance, and tunes against experimental data.',
     image: publicPath('Sunwhisper/cover.png'),
     category: ['software'],
+    projectType: 'Personal Project',
     skills: [
       { name: 'Python', category: 'software' },
       { name: 'NumPy', category: 'software' },
@@ -242,6 +250,7 @@ export const projects: Project[] = [
     description: 'An experimental AR headset project exploring transparent waveguide optics for extended screen real estate.',
     image: publicPath('Daylight/Daylight Render.webp'),
     category: ['hardware', 'mechanical'],
+    projectType: 'Personal Project',
     skills: [
       { name: 'Embedded Systems', category: 'hardware' },
       { name: 'PCB Design', category: 'hardware' },
@@ -271,6 +280,7 @@ export const projects: Project[] = [
     description: 'Improved version of a simpler kart I made in 2016. Built on a new chassis, and had a custom suspension system and improved steering.',
     image: publicPath('Go-Kart V2/Go kart V2 nobg.webp'),
     category: ['mechanical'],
+    projectType: 'Personal Project',
     skills: [
       { name: 'Mechanical Design', category: 'mechanical' },
       { name: 'Metalwork', category: 'mechanical' },
