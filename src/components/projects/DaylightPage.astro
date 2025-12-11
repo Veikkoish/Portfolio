@@ -1,0 +1,211 @@
+---
+import type { Project } from '../../config/projects';
+import { publicPath } from '../../config/projects';
+import ProjectHeader from '../shared/ProjectHeader.astro';
+import ProjectMenu from '../shared/ProjectMenu.astro';
+import SectionHeading from '../shared/SectionHeading.astro';
+import BackButton from '../shared/BackButton.astro';
+import SkillTag from '../SkillTag.astro';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+
+const galleryImages = [
+  'Render 4.webp',
+  'Render 5.webp',
+];
+---
+
+<main class="container mx-auto px-8 py-12">
+  <ProjectHeader title={project.title} year={project.year} inProgress={project.inProgress} />
+  <ProjectMenu sections={['overview', 'technology', 'process', 'gallery']} />
+
+  <div class="max-w-6xl mx-auto space-y-24">
+    <!-- Overview Section -->
+    <section id="overview" class="section-content scroll-mt-32">
+      <div class="space-y-16">
+        {project.overview?.[0] && (
+          <div class={`flex gap-12 items-center ${project.overview[0].imagePosition === 'right' ? 'flex-row-reverse' : ''}`}>
+            {project.overview[0].image && (
+              <div class="w-1/2">
+                <img src={project.overview[0].image} alt={project.title} class="rounded-2xl w-full" />
+              </div>
+            )}
+            <div class="w-1/2">
+              <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+                {project.overview[0].description}
+              </p>
+            </div>
+          </div>
+        )}
+        <div class="grid grid-cols-2 gap-6">
+          <img
+            src={publicPath('Daylight/Render 1.webp')}
+            alt="Daylight render"
+            class="rounded-2xl w-full"
+          />
+          <img
+            src={publicPath('Daylight/Render 2.webp')}
+            alt="Daylight render"
+            class="rounded-2xl w-full"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology" class="section-content scroll-mt-32">
+      <SectionHeading>Technology</SectionHeading>
+      <div class="flex flex-wrap gap-3 mb-12">
+        {project.skills.map((skill) => (
+          <SkillTag name={skill.name} category={skill.category} />
+        ))}
+      </div>
+      
+      <SectionHeading level={3}>Schematics</SectionHeading>
+      <p class="text-lg text-gray-300 leading-relaxed mb-8">
+        The device receives DisplayPort input through a USB-C port on the headband behind the left ear. A diverging cable splits the connection to both a power supply unit, which supplies the various voltages required by the main logic board and displays, and the data connection to the main logic board. The main logic board features a display driver IC (LT7911D), an STM32-based microcontroller, and a 9-axis IMU that detects and adjusts the output image according to the user's head movements. A touchpad board with a touch IC is located on the right temple of the device for user input.
+      </p>
+      <div class="space-y-8">
+        <div>
+          <h4 class="text-lg font-semibold mb-3 text-gray-200">Main Logic Board</h4>
+          <img
+            src={publicPath('Daylight/main_sch.webp')}
+            alt="Main board schematic"
+            class="rounded-2xl w-full"
+          />
+        </div>
+        <div class="grid grid-cols-2 gap-6">
+          <div>
+            <h4 class="text-lg font-semibold mb-3 text-gray-200">Connector Board</h4>
+            <img
+              src={publicPath('Daylight/connboard_sch.webp')}
+              alt="Connection board schematic"
+              class="rounded-2xl w-full"
+            />
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-3 text-gray-200">Power Supply Unit</h4>
+            <img
+              src={publicPath('Daylight/psu_sch.webp')}
+              alt="PSU schematic"
+              class="rounded-2xl w-full"
+            />
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <div class="w-3/4">
+            <h4 class="text-lg font-semibold mb-3 text-gray-200">Touchpad Board</h4>
+            <img
+              src={publicPath('Daylight/touch_sch.webp')}
+              alt="Touch pad schematic"
+              class="rounded-2xl w-full"
+            />
+          </div>
+        </div>
+      </div>
+      
+      <SectionHeading level={3} class="mt-12">PCB Layouts</SectionHeading>
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <img
+            src={publicPath('Daylight/Screen Shot 2023-01-30 at 10.27.12 PM.webp')}
+            alt="PCB layout"
+            class="rounded-2xl w-full"
+          />
+          <p class="text-sm text-gray-400 text-center">
+            The main logic board
+          </p>
+        </div>
+        <div class="flex justify-center">
+          <div class="grid grid-cols-2 gap-6 w-3/4">
+            <div class="space-y-2">
+              <img
+                src={publicPath('Daylight/Screen Shot 2023-01-30 at 10.28.07 PM.webp')}
+                alt="PCB layout"
+                class="rounded-2xl w-full"
+              />
+              <p class="text-sm text-gray-400 text-center">
+                The power supply unit
+              </p>
+            </div>
+            <div class="space-y-2">
+              <img
+                src={publicPath('Daylight/Screen Shot 2023-01-30 at 10.42.24 PM.webp')}
+                alt="PCB layout"
+                class="rounded-2xl w-full"
+              />
+              <p class="text-sm text-gray-400 text-center">
+                The USB-C connector board
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="section-content scroll-mt-32">
+      <SectionHeading>Process</SectionHeading>
+      <div class="space-y-6 mb-8 flex flex-col items-center">
+        <img
+          src={publicPath('Daylight/dev board.webp')}
+          alt="Development board"
+          class="rounded-2xl w-1/2"
+        />
+        <p class="text-sm text-gray-400 text-center">
+          This was the development board for driving these displays.
+        </p>
+      </div>
+      <p class="text-lg text-gray-300 leading-relaxed mb-8">
+        To rapidly iterate on waveguide prototypes, I built a testing setup that allowed me to quickly swap between different waveguide designs. This modular approach enabled efficient evaluation of optical performance and helped identify the most promising designs for further development.
+      </p>
+      <div class="grid grid-cols-3 gap-6">
+        <div class="h-64 overflow-hidden rounded-2xl">
+          <img
+            src={publicPath('Daylight/waveguide_dev1.webp')}
+            alt="Waveguide development setup"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div class="h-64 overflow-hidden rounded-2xl">
+          <img
+            src={publicPath('Daylight/waveguide_dev2.webp')}
+            alt="Waveguide development setup"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div class="h-64 overflow-hidden rounded-2xl">
+          <img
+            src={publicPath('Daylight/waveguide_dev3.webp')}
+            alt="Waveguide development setup"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+      <p class="text-lg text-gray-300 leading-relaxed mt-8">
+        The optics design proved to be more complex than I initially anticipated, requiring resources and expertise beyond what I could provide independently. I reached out to potential collaborators at the university and explored partnerships with private companies specializing in optical systems, but unfortunately, these efforts didn't materialize into a viable path forward for the project.
+      </p>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section-content scroll-mt-32">
+      <SectionHeading>Gallery</SectionHeading>
+      <div class="grid grid-cols-2 gap-6">
+        {galleryImages.map((img) => (
+          <img
+            src={publicPath(`Daylight/${img}`)}
+            alt={`Daylight ${img}`}
+            class="rounded-2xl w-full"
+          />
+        ))}
+      </div>
+    </section>
+
+    <BackButton />
+  </div>
+</main>
+

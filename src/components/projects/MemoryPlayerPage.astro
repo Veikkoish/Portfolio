@@ -1,0 +1,209 @@
+---
+import type { Project } from '../../config/projects';
+import { publicPath } from '../../config/projects';
+import ProjectHeader from '../shared/ProjectHeader.astro';
+import ProjectMenu from '../shared/ProjectMenu.astro';
+import SectionHeading from '../shared/SectionHeading.astro';
+import BackButton from '../shared/BackButton.astro';
+import SkillTag from '../SkillTag.astro';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<main class="container mx-auto px-8 py-12">
+  <ProjectHeader title={project.title} year={project.year} inProgress={project.inProgress} />
+  <ProjectMenu sections={['overview', 'technology', 'process', 'gallery']} />
+
+  <div class="max-w-6xl mx-auto space-y-24">
+    <!-- Overview Section -->
+    <section id="overview" class="section-content scroll-mt-32">
+      <div class="space-y-16">
+        {project.overview?.map((section) => (
+          section.image ? (
+            <div class={`flex gap-12 items-center ${section.imagePosition === 'right' ? 'flex-row-reverse' : ''}`}>
+              <div class="w-1/2">
+                <img src={section.image} alt={project.title} class="rounded-2xl w-full" />
+              </div>
+              <div class="w-1/2">
+                <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+                  {section.description}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+                {section.description}
+              </p>
+            </div>
+          )
+        ))}
+      </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology" class="section-content scroll-mt-32">
+      <SectionHeading>Technology</SectionHeading>
+      <div class="flex flex-wrap gap-3 mb-12">
+        {project.skills.map((skill) => (
+          <SkillTag name={skill.name} category={skill.category} />
+        ))}
+      </div>
+      <div class="flex gap-12 items-center">
+        <div class="w-1/2">
+          <img
+            src={publicPath('Memory Player/parts.webp')}
+            alt="Memory Player parts"
+            class="rounded-2xl w-full"
+          />
+        </div>
+        <div class="w-1/2">
+          <p class="text-lg text-gray-300 leading-relaxed">
+            This is easily the smallest physical size product I've ever built. To save time and money, I deciced to use the Adafruit Feather ThinkInk board instead of making a custom PCB. The device also features a 2000 mAh LiPo battery for a years-long battery life, a USB-C port for charging and reprogramming, a pinhole reset button in the back and two buttons in the front for scrolling.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="section-content scroll-mt-32">
+      <SectionHeading>Process</SectionHeading>
+      <div class="grid grid-cols-2 gap-6 mb-6">
+        <div class="space-y-4">
+          <img
+            src={publicPath('Memory Player/braces.webp')}
+            alt="Braces"
+            class="rounded-2xl w-full"
+          />
+          <p class="text-sm text-gray-400 text-center">
+            I had a cheap USB-C breakout that didn't end up working due to wrongly wired CC-pins. For the new breakout board I had to make a new internal brace (the green part).
+          </p>
+        </div>
+        <div class="space-y-4">
+          <img
+            src={publicPath('Memory Player/new_brace.webp')}
+            alt="New brace"
+            class="rounded-2xl w-full"
+          />
+          <p class="text-sm text-gray-400 text-center">
+            New breakout soldered and attached to new brace along with buttons.
+          </p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-6 mb-6">
+        <div class="space-y-4">
+          <video
+            src={publicPath('Memory Player/buttons.MOV')}
+            autoplay
+            loop
+            muted
+            playsinline
+            class="rounded-2xl"
+            style="height: 70vh; max-width: 80%; margin: 0 auto; display: block;"
+          ></video>
+          <p class="text-sm text-gray-400 text-center">
+            The front plate has two buttons.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <video
+            src={publicPath('Memory Player/battery.MOV')}
+            autoplay
+            loop
+            muted
+            playsinline
+            class="rounded-2xl"
+            style="height: 70vh; max-width: 80%; margin: 0 auto; display: block;"
+          ></video>
+          <p class="text-sm text-gray-400 text-center">
+            Checking the board voltage after installing the battery.
+          </p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-6 mb-6">
+        <div class="space-y-4">
+          <video
+            src={publicPath('Memory Player/fit.MOV')}
+            autoplay
+            loop
+            muted
+            playsinline
+            class="rounded-2xl"
+            style="height: 70vh; max-width: 80%; margin: 0 auto; display: block;"
+          ></video>
+          <p class="text-sm text-gray-400 text-center">
+            The tolerances I had designed turned out to have been way too optimistic. The front plate stuck out from the enclosure slightly.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <video
+            src={publicPath('Memory Player/silicone.mp4')}
+            autoplay
+            loop
+            muted
+            playsinline
+            class="rounded-2xl"
+            style="height: 70vh; max-width: 80%; margin: 0 auto; display: block;"
+          ></video>
+          <p class="text-sm text-gray-400 text-center">
+            To counter the poorly fitting front plate I put black silicone glue all around it. Once dry, I scratched it slightly with 400 grit sandpaper which made its color match with the front plate.
+          </p>
+        </div>
+      </div>
+      <div class="mb-6">
+        <div class="space-y-4">
+          <img
+            src={publicPath('Memory Player/oil.webp')}
+            alt="Oil finish"
+            class="rounded-2xl"
+            style="width: 40vw; object-fit: cover; margin: 0 auto; display: block;"
+          />
+          <p class="text-sm text-gray-400 text-center">
+            The oak enclosure was finished with two coats of colorless furniture oil.
+          </p>
+        </div>
+      </div>
+      <p class="text-lg text-gray-300 leading-relaxed">
+        Routing the USB-C port to the outside of the enclosure turned out to take a huge amount of time because of the spatial constraints. If I were to build this again, I would implement everything necessary from Adafruit's design to a better form factor for the enclosure. This would eliminate the need for the secondary Type-C port and would allow to put the battery next to the board as opposed under it. This would save almost half of the thickness of the device. Maybe I'll do this for another anniversary years from now to also compare how far E-Ink technology has come.
+      </p>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section-content scroll-mt-32">
+      <SectionHeading>Gallery</SectionHeading>
+      <div class="grid grid-cols-2 gap-6">
+        <img
+          src={publicPath('Memory Player/size_comparison.webp')}
+          alt="Size comparison"
+          class="rounded-2xl w-full"
+          style="height: 50vh; object-fit: cover;"
+        />
+        <img
+          src={publicPath('Memory Player/final_angle.webp')}
+          alt="Final angle"
+          class="rounded-2xl w-full"
+          style="height: 50vh; object-fit: cover;"
+        />
+        <img
+          src={publicPath('Memory Player/back.webp')}
+          alt="Back"
+          class="rounded-2xl w-full"
+          style="height: 50vh; object-fit: cover;"
+        />
+        <img
+          src={publicPath('Memory Player/final_otter.webp')}
+          alt="Final otter"
+          class="rounded-2xl w-full"
+          style="height: 50vh; object-fit: cover;"
+        />
+      </div>
+    </section>
+
+    <BackButton />
+  </div>
+</main>
+

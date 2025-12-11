@@ -3,6 +3,8 @@ import { readdir, stat } from 'fs/promises';
 import { join, extname } from 'path';
 import { existsSync } from 'fs';
 
+//npm run convert-images
+
 const PUBLIC_DIR = './public';
 const PROJECT_FOLDERS = [
   'Daylight',

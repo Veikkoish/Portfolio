@@ -1,0 +1,49 @@
+---
+interface Props {
+  src: string;
+  alt?: string;
+  caption?: string;
+  type?: 'image' | 'video';
+  autoplay?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+  controls?: boolean;
+  class?: string;
+}
+
+const { 
+  src, 
+  alt = '', 
+  caption, 
+  type = 'image',
+  autoplay = false,
+  loop = false,
+  muted = true,
+  controls = false,
+  class: className = ''
+} = Astro.props;
+---
+
+<div class="space-y-2">
+  {type === 'video' ? (
+    <video
+      src={src}
+      autoplay={autoplay}
+      loop={loop}
+      muted={muted}
+      controls={controls}
+      playsinline
+      class={`rounded-2xl ${className}`}
+    ></video>
+  ) : (
+    <img
+      src={src}
+      alt={alt}
+      class={`rounded-2xl ${className}`}
+    />
+  )}
+  {caption && (
+    <p class="text-sm text-gray-400 text-center">{caption}</p>
+  )}
+</div>
+

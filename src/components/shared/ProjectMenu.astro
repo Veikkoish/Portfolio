@@ -1,0 +1,49 @@
+---
+interface Props {
+  sections: ('overview' | 'technology' | 'process' | 'gallery')[];
+}
+
+const { sections } = Astro.props;
+
+const labels: Record<string, string> = {
+  overview: 'Overview',
+  technology: 'Technology',
+  process: 'Process',
+  gallery: 'Gallery',
+};
+---
+
+<div class="flex justify-center gap-4 mb-16">
+  {sections.map((section, index) => (
+    <button 
+      class={`menu-btn ${index === 0 ? 'active' : ''}`} 
+      data-section={section}
+    >
+      {labels[section]}
+    </button>
+  ))}
+</div>
+
+<style>
+  .menu-btn {
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    text-decoration: none;
+    display: inline-block;
+    color: inherit;
+  }
+
+  .menu-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .menu-btn.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+</style>
+

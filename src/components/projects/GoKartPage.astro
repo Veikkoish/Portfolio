@@ -1,0 +1,79 @@
+---
+import type { Project } from '../../config/projects';
+import { publicPath } from '../../config/projects';
+import ProjectHeader from '../shared/ProjectHeader.astro';
+import ProjectMenu from '../shared/ProjectMenu.astro';
+import SectionHeading from '../shared/SectionHeading.astro';
+import BackButton from '../shared/BackButton.astro';
+import ImageGrid from '../shared/ImageGrid.astro';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+
+const galleryImages = [
+  { src: publicPath('Go-Kart V2/20190707_134935.webp'), alt: 'Go-Kart' },
+  { src: publicPath('Go-Kart V2/20190707_134943.webp'), alt: 'Go-Kart' },
+  { src: publicPath('Go-Kart V2/20190707_134954.webp'), alt: 'Go-Kart' },
+  { src: publicPath('Go-Kart V2/20190707_135023.webp'), alt: 'Go-Kart' },
+  { src: publicPath('Go-Kart V2/20190707_135027.webp'), alt: 'Go-Kart' },
+  { src: publicPath('Go-Kart V2/20190707_135041.webp'), alt: 'Go-Kart' },
+];
+---
+
+<main class="container mx-auto px-8 py-12">
+  <ProjectHeader title={project.title} year={project.year} inProgress={project.inProgress} />
+  <ProjectMenu sections={['overview', 'gallery']} />
+
+  <div class="max-w-6xl mx-auto space-y-24">
+    <!-- Overview Section -->
+    <section id="overview" class="section-content scroll-mt-32">
+      <div class="space-y-16">
+        {project.overview ? (
+          project.overview.map((section) => (
+            section.image ? (
+              <div class={`flex gap-12 items-center ${section.imagePosition === 'right' ? 'flex-row-reverse' : ''}`}>
+                <div class="w-1/2">
+                  <img src={section.image} alt={project.title} class="rounded-2xl w-full" />
+                </div>
+                <div class="w-1/2">
+                  <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+                    {section.description}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+                  {section.description}
+                </p>
+              </div>
+            )
+          ))
+        ) : (
+          <div class="flex gap-12 items-center">
+            <div class="w-1/2">
+              <img src={project.image} alt={project.title} class="rounded-2xl w-full" />
+            </div>
+            <div class="w-1/2">
+              <p class="text-lg text-gray-300 leading-relaxed">
+                {project.description}
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section-content scroll-mt-32">
+      <SectionHeading>Gallery</SectionHeading>
+      <ImageGrid images={galleryImages} cols={2} />
+    </section>
+
+    <BackButton />
+  </div>
+</main>
+

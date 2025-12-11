@@ -225,6 +225,11 @@ export const projects: Project[] = [
     ],
     year: 2025,
     inProgress: true,
+    overview: [
+      {
+        description: "I had an old iPhone sitting in my drawer and wanted to give it new life. I'm making it into a fun AI character that lives inside a miniature iMac G4 enclosure.",
+      },
+    ],
   },
   {
     title: 'Verify',

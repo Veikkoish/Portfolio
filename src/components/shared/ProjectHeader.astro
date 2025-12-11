@@ -1,0 +1,19 @@
+---
+interface Props {
+  title: string;
+  year: number | string;
+  inProgress?: boolean;
+}
+
+const { title, year, inProgress } = Astro.props;
+---
+
+<div class="max-w-6xl mx-auto mb-12">
+  <h1 class="text-5xl font-bold mb-4 font-display">
+    {title}
+  </h1>
+  <p class="text-xl text-gray-400">
+    {year}{inProgress ? ' (in progress)' : ''}
+  </p>
+</div>
+

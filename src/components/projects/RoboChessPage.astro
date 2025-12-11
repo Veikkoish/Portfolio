@@ -1,0 +1,131 @@
+---
+import type { Project } from '../../config/projects';
+import { publicPath } from '../../config/projects';
+import ProjectHeader from '../shared/ProjectHeader.astro';
+import ProjectMenu from '../shared/ProjectMenu.astro';
+import SectionHeading from '../shared/SectionHeading.astro';
+import BackButton from '../shared/BackButton.astro';
+import SkillTag from '../SkillTag.astro';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+
+const galleryImages = [
+  'front.webp',
+  'rightup.webp',
+  'showcase.webp',
+  'switch.webp',
+  'presentation.webp',
+  'award.webp',
+];
+
+const processMedia = [
+  { file: 'early_render.webp', caption: 'Early render of showing the gantry and rough hardware placement.', type: 'image', fullSize: true },
+  { file: 'tape.webp', caption: 'The dark squares were made by applying wood filler to laser-engraved grooves. The tape was for protecting other areas.', type: 'image', fullSize: false },
+  { file: 'assembly.webp', caption: 'Hardware getting assembled', type: 'image', fullSize: false },
+  { file: 'Sensor_array.webp', caption: 'The hall-effect sensor matrix was installed under the pieces to detect piece locations to enable more game-modes.', type: 'image', fullSize: false },
+  { file: 'calibration.mp4', caption: 'Calibration test of the assembled gantry before placement to the enclosure. The board uses limit switches to zero its axis at every boot up similar to a 3D-printer.', type: 'video', fullSize: false },
+];
+---
+
+<main class="container mx-auto px-8 py-12">
+  <ProjectHeader title={project.title} year={project.year} inProgress={project.inProgress} />
+  <ProjectMenu sections={['overview', 'technology', 'process', 'gallery']} />
+
+  <div class="max-w-6xl mx-auto space-y-24">
+    <!-- Overview Section -->
+    <section id="overview" class="section-content scroll-mt-32">
+      <div class="space-y-16">
+        {project.overview?.map((section) => (
+          section.image ? (
+            <div class={`flex gap-12 items-center ${section.imagePosition === 'right' ? 'flex-row-reverse' : ''}`}>
+              <div class="w-1/2">
+                <img src={section.image} alt={project.title} class="rounded-2xl w-full" />
+              </div>
+              <div class="w-1/2">
+                <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+                  {section.description}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+                {section.description}
+              </p>
+            </div>
+          )
+        ))}
+      </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology" class="section-content scroll-mt-32">
+      <SectionHeading>Technology</SectionHeading>
+      <div class="flex flex-wrap gap-3 mb-12">
+        {project.skills.map((skill) => (
+          <SkillTag name={skill.name} category={skill.category} />
+        ))}
+      </div>
+      <p class="text-lg text-gray-300 leading-relaxed mb-8">
+        The board uses an Arduino Mega 2560 to communicate with a mobile phone via Bluetooth to get the voice commands for players' moves. The pieces are moved by a magnet that moves on a 2D-Gantry featuring low-profile stepper motors, timing belts, and servo-attached magnet that moves vertically to engage with the pieces. Early iterations used an electromagnet but the permanent magnet system was found to be smoother and more reliable. To enable users to also use manual moves instead of playing with only voice, a hall-effect sensor matrix was added directly under the pieces.
+      </p>
+      <SectionHeading level={3}>Hardware System Diagram</SectionHeading>
+      <div class="mt-8 flex justify-center">
+        <img
+          src={publicPath('RoboChess/Robo_diagram.webp')}
+          alt="RoboChess System Diagram"
+          class="rounded-2xl w-[70%]"
+        />
+      </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="section-content scroll-mt-32">
+      <SectionHeading>Process</SectionHeading>
+      <p class="text-lg text-gray-300 leading-relaxed mb-8">
+        Unfortunately, this project was poorly documented. The design and fabrication of this project was completed in full between October and December of 2022.
+      </p>
+      <div class="grid grid-cols-2 gap-6">
+        {processMedia.map((item) => (
+          <div class={`space-y-2 ${item.fullSize ? '' : 'flex flex-col items-center'}`}>
+            {item.type === 'video' ? (
+              <video
+                src={publicPath(`RoboChess/${item.file}`)}
+                controls
+                class={`rounded-2xl ${item.fullSize ? 'w-full' : 'w-[70%]'}`}
+              ></video>
+            ) : (
+              <img
+                src={publicPath(`RoboChess/${item.file}`)}
+                alt={item.caption}
+                class={`rounded-2xl ${item.fullSize ? 'w-full' : 'w-[70%]'}`}
+              />
+            )}
+            <p class="text-sm text-gray-400 text-center">{item.caption}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section-content scroll-mt-32">
+      <SectionHeading>Gallery</SectionHeading>
+      <div class="grid grid-cols-2 gap-6">
+        {galleryImages.map((img) => (
+          <img
+            src={publicPath(`RoboChess/${img}`)}
+            alt={`RoboChess ${img}`}
+            class="rounded-2xl w-full"
+          />
+        ))}
+      </div>
+    </section>
+
+    <BackButton />
+  </div>
+</main>
+

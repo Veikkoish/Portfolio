@@ -1,0 +1,20 @@
+---
+interface Props {
+  level?: 2 | 3 | 4;
+  class?: string;
+}
+
+const { level = 2, class: className = '' } = Astro.props;
+
+const baseClass = 'font-bold font-display';
+const sizeClasses = {
+  2: 'text-3xl mb-8',
+  3: 'text-xl mb-6',
+  4: 'text-lg mb-3 text-gray-200',
+};
+---
+
+{level === 2 && <h2 class={`${baseClass} ${sizeClasses[2]} ${className}`}><slot /></h2>}
+{level === 3 && <h3 class={`${baseClass} ${sizeClasses[3]} ${className}`}><slot /></h3>}
+{level === 4 && <h4 class={`${baseClass} ${sizeClasses[4]} ${className}`}><slot /></h4>}
+
