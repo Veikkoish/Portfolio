@@ -23,15 +23,15 @@ const skillCategories = skills.map(s => s.category).join(',');
 <a
   id={slug}
   href={`${import.meta.env.BASE_URL}/${slug}`}
-  class="project-card w-[70vw] min-h-[400px] mx-auto my-8 rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer relative block scroll-mt-32"
+  class="project-card w-[calc(100%-2rem)] md:w-[70vw] min-h-0 md:min-h-[400px] mx-auto my-4 md:my-8 rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer relative block scroll-mt-32"
   data-categories={categoryString}
   data-skill-categories={skillCategories}
 >
-  <div class="absolute top-6 right-6 text-base text-gray-400" style="font-family: 'Inter', sans-serif;">
+  <div class="hidden md:block absolute top-6 right-6 text-base text-gray-400" style="font-family: 'Inter', sans-serif;">
     {projectType} • {year}{inProgress ? ' (in progress)' : ''}
   </div>
-  <div class={`flex px-12 gap-8 ${slug === 'hey-mac' ? 'py-8' : 'py-16'}`}>
-    <div class="w-1/2 flex items-center justify-center">
+  <div class={`flex flex-col md:flex-row px-4 md:px-12 gap-4 md:gap-8 ${slug === 'hey-mac' ? 'py-4 md:py-8' : 'py-6 md:py-16'}`}>
+    <div class="w-full md:w-1/2 flex items-center justify-center">
       {video ? (
         <video
           src={video}
@@ -45,14 +45,17 @@ const skillCategories = skills.map(s => s.category).join(',');
         <img src={image} alt={title} class="max-w-full max-h-full object-contain rounded-2xl" />
       )}
     </div>
-    <div class="w-1/2 flex flex-col justify-center gap-4">
-      <h2 class="text-4xl font-bold" style="font-family: 'Faculty Glyphic', sans-serif;">
+    <div class="w-full md:w-1/2 flex flex-col justify-center gap-3 md:gap-4">
+      <h2 class="text-2xl md:text-4xl font-bold" style="font-family: 'Faculty Glyphic', sans-serif;">
         {title}
       </h2>
-      <p class="text-lg text-gray-400 leading-relaxed">
+      <p class="text-sm md:hidden text-gray-400" style="font-family: 'Inter', sans-serif;">
+        {projectType} • {year}{inProgress ? ' (in progress)' : ''}
+      </p>
+      <p class="text-base md:text-lg text-gray-400 leading-relaxed">
         {description}
       </p>
-      <div class="flex flex-wrap gap-2 mt-4">
+      <div class="flex flex-wrap gap-2 mt-2 md:mt-4">
         {skills.map((skill) => (
           <SkillTag name={skill.name} category={skill.category} />
         ))}

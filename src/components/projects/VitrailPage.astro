@@ -14,20 +14,20 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<main class="container mx-auto px-8 py-12">
+<main class="container mx-auto px-4 md:px-8 py-8 md:py-12">
   <ProjectHeader title={project.title} year={project.year} inProgress={project.inProgress} />
   <ProjectMenu sections={['overview', 'technology', 'process', 'gallery']} />
 
-  <div class="max-w-6xl mx-auto space-y-24">
+  <div class="max-w-6xl mx-auto space-y-16 md:space-y-24">
     <!-- Overview Section -->
     <section id="overview" class="section-content scroll-mt-32">
-      <div class="space-y-16">
-        <div class="flex gap-12 items-center">
-          <div class="w-1/2">
+      <div class="space-y-10 md:space-y-16">
+        <div class="flex flex-col md:flex-row gap-6 md:gap-12 items-center">
+          <div class="w-full md:w-1/2">
             <img src={project.image} alt={project.title} class="rounded-2xl w-full" />
           </div>
-          <div class="w-1/2">
-            <p class="text-lg text-gray-300 leading-relaxed">
+          <div class="w-full md:w-1/2">
+            <p class="text-base md:text-lg text-gray-300 leading-relaxed">
               {project.description}
             </p>
           </div>
@@ -38,12 +38,12 @@ const { project } = Astro.props;
     <!-- Technology Section -->
     <section id="technology" class="section-content scroll-mt-32">
       <SectionHeading>Technology</SectionHeading>
-      <div class="flex flex-wrap gap-3 mb-12">
+      <div class="flex flex-wrap gap-3 mb-8 md:mb-12">
         {project.skills.map((skill) => (
           <SkillTag name={skill.name} category={skill.category} />
         ))}
       </div>
-      <div class="grid grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         <div class="space-y-2">
           <img
             src={publicPath('Vitrail/kab230-removebg-preview.webp')}
@@ -80,12 +80,12 @@ const { project } = Astro.props;
     <!-- Process Section -->
     <section id="process" class="section-content scroll-mt-32">
       <SectionHeading>Process</SectionHeading>
-      <div class="grid grid-cols-2 gap-6 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
         <div class="space-y-2">
           <img
             src={publicPath('Vitrail/gluing.webp')}
             alt="Enclosure assembly gluing process"
-            class="rounded-2xl w-full h-[400px] object-cover"
+            class="rounded-2xl w-full h-64 md:h-[400px] object-cover"
           />
           <p class="text-sm text-gray-400 text-center">
             Enclosure assembly gluing process
@@ -95,14 +95,14 @@ const { project } = Astro.props;
           <img
             src={publicPath('Vitrail/before_oil.webp')}
             alt="All enclosure parts prepared for surface finishing"
-            class="rounded-2xl w-full h-[400px] object-cover"
+            class="rounded-2xl w-full h-64 md:h-[400px] object-cover"
           />
           <p class="text-sm text-gray-400 text-center">
             All enclosure parts prepared for surface finishing with a high-quality furniture oil.
           </p>
         </div>
       </div>
-      <div class="grid grid-cols-2 gap-6 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
         <img
           src={publicPath('Vitrail/old_open.webp')}
           alt="Old open"
@@ -114,15 +114,15 @@ const { project } = Astro.props;
           class="rounded-2xl w-full"
         />
       </div>
-      <p class="text-lg text-gray-300 leading-relaxed mb-6">
-        I used these Dayton Audio ND105-4 4" Aluminum Cone Midbass Neo Driver 4 Ohm drivers originally, but later upgraded to the RS100 drivers and also made a new front baffle that was 1 mm thinner to make the grid sit more flush with the design.
+      <p class="text-base md:text-lg text-gray-300 leading-relaxed mb-4 md:mb-6">
+        Initially, I used these Dayton Audio ND105-4 4" Aluminum Cone Midbass Neo Driver 4 Ohm drivers, but later upgraded to the RS100 drivers and also made a new front baffle that was 1 mm thinner to make the grid sit more flush with the design.
       </p>
-      <div class="grid grid-cols-2 gap-6 items-start">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-start">
         <div class="space-y-2">
           <img
             src={publicPath('Vitrail/newbaffle.webp')}
             alt="New front baffle"
-            class="rounded-2xl w-full h-[400px] object-cover"
+            class="rounded-2xl w-full h-64 md:h-[400px] object-cover"
           />
           <p class="text-sm text-gray-400 text-center">
             New front baffle CNC machined from MDF.
@@ -131,10 +131,11 @@ const { project } = Astro.props;
         <div>
           <video
             src={publicPath('Vitrail/bafflecnc.mp4')}
-            controls
             autoplay
             loop
-            class="rounded-2xl w-full h-[400px] object-cover"
+            muted
+            playsinline
+            class="rounded-2xl w-full h-64 md:h-[400px] object-cover"
           ></video>
         </div>
       </div>
@@ -143,7 +144,33 @@ const { project } = Astro.props;
     <!-- Gallery Section -->
     <section id="gallery" class="section-content scroll-mt-32">
       <SectionHeading>Gallery</SectionHeading>
-      <p class="text-gray-400">Gallery images coming soon.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <img
+          src={publicPath('Vitrail/1.webp')}
+          alt="Vitrail gallery image 1"
+          class="rounded-2xl w-full"
+        />
+        <img
+          src={publicPath('Vitrail/2.webp')}
+          alt="Vitrail gallery image 2"
+          class="rounded-2xl w-full"
+        />
+        <img
+          src={publicPath('Vitrail/3.webp')}
+          alt="Vitrail gallery image 3"
+          class="rounded-2xl w-full"
+        />
+        <img
+          src={publicPath('Vitrail/4.webp')}
+          alt="Vitrail gallery image 4"
+          class="rounded-2xl w-full"
+        />
+        <img
+          src={publicPath('Vitrail/5.webp')}
+          alt="Vitrail gallery image 5"
+          class="rounded-2xl w-full"
+        />
+      </div>
     </section>
 
     <BackButton />

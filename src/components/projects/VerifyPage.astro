@@ -14,29 +14,29 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<main class="container mx-auto px-8 py-12">
+<main class="container mx-auto px-4 md:px-8 py-8 md:py-12">
   <ProjectHeader title={project.title} year={project.year} inProgress={project.inProgress} />
   <ProjectMenu sections={['overview', 'technology', 'gallery']} />
 
-  <div class="max-w-6xl mx-auto space-y-24">
+  <div class="max-w-6xl mx-auto space-y-16 md:space-y-24">
     <!-- Overview Section -->
     <section id="overview" class="section-content scroll-mt-32">
-      <div class="space-y-16">
+      <div class="space-y-10 md:space-y-16">
         {project.overview?.map((section) => (
           section.image ? (
-            <div class={`flex gap-12 items-center ${section.imagePosition === 'right' ? 'flex-row-reverse' : ''}`}>
-              <div class="w-1/2">
+            <div class={`flex flex-col md:flex-row gap-6 md:gap-12 items-center ${section.imagePosition === 'right' ? 'md:flex-row-reverse' : ''}`}>
+              <div class="w-full md:w-1/2">
                 <img src={section.image} alt={project.title} class="rounded-2xl w-full" />
               </div>
-              <div class="w-1/2">
-                <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+              <div class="w-full md:w-1/2">
+                <p class="text-base md:text-lg text-gray-300 leading-relaxed whitespace-pre-line">
                   {section.description}
                 </p>
               </div>
             </div>
           ) : (
             <div>
-              <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+              <p class="text-base md:text-lg text-gray-300 leading-relaxed whitespace-pre-line">
                 {section.description}
               </p>
             </div>
@@ -48,12 +48,12 @@ const { project } = Astro.props;
     <!-- Technology Section -->
     <section id="technology" class="section-content scroll-mt-32">
       <SectionHeading>Technology</SectionHeading>
-      <div class="flex flex-wrap gap-3 mb-12">
+      <div class="flex flex-wrap gap-3 mb-8 md:mb-12">
         {project.skills.map((skill) => (
           <SkillTag name={skill.name} category={skill.category} />
         ))}
       </div>
-      <p class="text-lg text-gray-300 leading-relaxed">
+      <p class="text-base md:text-lg text-gray-300 leading-relaxed">
         The React-based extension injects a highlighter into the active tab via the Chrome Scripting API, extracts the page text, and streams analysis results back to the UI. The frontend, built with Tailwind CSS, communicates with a Node.js/Express backend that extracts key claims, checks them first against the Google Fact Check API, then uses Google's Gemini model with web search for corroboration. Results arrive via Server-Sent Events, so claims and highlights appear incrementally on the page, with inline hover/click details and a summary panel in the popup. Additional features include searching for additional sources on individual claims and performing deep research on broader topics.
       </p>
     </section>
@@ -61,24 +61,24 @@ const { project } = Astro.props;
     <!-- Gallery Section -->
     <section id="gallery" class="section-content scroll-mt-32">
       <SectionHeading>Gallery</SectionHeading>
-      <div class="flex gap-6 items-start">
+      <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
         <img
           src={publicPath('Verify/popup.webp')}
           alt="Verify popup"
-          class="rounded-2xl"
-          style="width: 25vw; height: auto;"
+          class="rounded-2xl w-full md:w-auto"
+          style="max-width: 100%;"
         />
         <img
           src={publicPath('Verify/claims.webp')}
           alt="Verify claims"
-          class="rounded-2xl"
-          style="width: 30vw;"
+          class="rounded-2xl w-full md:w-auto"
+          style="max-width: 100%;"
         />
         <img
           src={publicPath('Verify/details.webp')}
           alt="Verify details"
-          class="rounded-2xl"
-          style="width: 20vw;"
+          class="rounded-2xl w-full md:w-auto"
+          style="max-width: 100%;"
         />
       </div>
     </section>

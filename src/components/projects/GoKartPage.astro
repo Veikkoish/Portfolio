@@ -23,42 +23,42 @@ const galleryImages = [
 ];
 ---
 
-<main class="container mx-auto px-8 py-12">
+<main class="container mx-auto px-4 md:px-8 py-8 md:py-12">
   <ProjectHeader title={project.title} year={project.year} inProgress={project.inProgress} />
   <ProjectMenu sections={['overview', 'gallery']} />
 
-  <div class="max-w-6xl mx-auto space-y-24">
+  <div class="max-w-6xl mx-auto space-y-16 md:space-y-24">
     <!-- Overview Section -->
     <section id="overview" class="section-content scroll-mt-32">
-      <div class="space-y-16">
+      <div class="space-y-10 md:space-y-16">
         {project.overview ? (
           project.overview.map((section) => (
             section.image ? (
-              <div class={`flex gap-12 items-center ${section.imagePosition === 'right' ? 'flex-row-reverse' : ''}`}>
-                <div class="w-1/2">
+              <div class={`flex flex-col md:flex-row gap-6 md:gap-12 items-center ${section.imagePosition === 'right' ? 'md:flex-row-reverse' : ''}`}>
+                <div class="w-full md:w-1/2">
                   <img src={section.image} alt={project.title} class="rounded-2xl w-full" />
                 </div>
-                <div class="w-1/2">
-                  <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+                <div class="w-full md:w-1/2">
+                  <p class="text-base md:text-lg text-gray-300 leading-relaxed whitespace-pre-line">
                     {section.description}
                   </p>
                 </div>
               </div>
             ) : (
               <div>
-                <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+                <p class="text-base md:text-lg text-gray-300 leading-relaxed whitespace-pre-line">
                   {section.description}
                 </p>
               </div>
             )
           ))
         ) : (
-          <div class="flex gap-12 items-center">
-            <div class="w-1/2">
+          <div class="flex flex-col md:flex-row gap-6 md:gap-12 items-center">
+            <div class="w-full md:w-1/2">
               <img src={project.image} alt={project.title} class="rounded-2xl w-full" />
             </div>
-            <div class="w-1/2">
-              <p class="text-lg text-gray-300 leading-relaxed">
+            <div class="w-full md:w-1/2">
+              <p class="text-base md:text-lg text-gray-300 leading-relaxed">
                 {project.description}
               </p>
             </div>

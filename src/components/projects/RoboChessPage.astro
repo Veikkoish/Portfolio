@@ -31,29 +31,29 @@ const processMedia = [
 ];
 ---
 
-<main class="container mx-auto px-8 py-12">
+<main class="container mx-auto px-4 md:px-8 py-8 md:py-12">
   <ProjectHeader title={project.title} year={project.year} inProgress={project.inProgress} />
   <ProjectMenu sections={['overview', 'technology', 'process', 'gallery']} />
 
-  <div class="max-w-6xl mx-auto space-y-24">
+  <div class="max-w-6xl mx-auto space-y-16 md:space-y-24">
     <!-- Overview Section -->
     <section id="overview" class="section-content scroll-mt-32">
-      <div class="space-y-16">
+      <div class="space-y-10 md:space-y-16">
         {project.overview?.map((section) => (
           section.image ? (
-            <div class={`flex gap-12 items-center ${section.imagePosition === 'right' ? 'flex-row-reverse' : ''}`}>
-              <div class="w-1/2">
+            <div class={`flex flex-col md:flex-row gap-6 md:gap-12 items-center ${section.imagePosition === 'right' ? 'md:flex-row-reverse' : ''}`}>
+              <div class="w-full md:w-1/2">
                 <img src={section.image} alt={project.title} class="rounded-2xl w-full" />
               </div>
-              <div class="w-1/2">
-                <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+              <div class="w-full md:w-1/2">
+                <p class="text-base md:text-lg text-gray-300 leading-relaxed whitespace-pre-line">
                   {section.description}
                 </p>
               </div>
             </div>
           ) : (
             <div>
-              <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+              <p class="text-base md:text-lg text-gray-300 leading-relaxed whitespace-pre-line">
                 {section.description}
               </p>
             </div>
@@ -65,20 +65,20 @@ const processMedia = [
     <!-- Technology Section -->
     <section id="technology" class="section-content scroll-mt-32">
       <SectionHeading>Technology</SectionHeading>
-      <div class="flex flex-wrap gap-3 mb-12">
+      <div class="flex flex-wrap gap-3 mb-8 md:mb-12">
         {project.skills.map((skill) => (
           <SkillTag name={skill.name} category={skill.category} />
         ))}
       </div>
-      <p class="text-lg text-gray-300 leading-relaxed mb-8">
+      <p class="text-base md:text-lg text-gray-300 leading-relaxed mb-6 md:mb-8">
         The board uses an Arduino Mega 2560 to communicate with a mobile phone via Bluetooth to get the voice commands for players' moves. The pieces are moved by a magnet that moves on a 2D-Gantry featuring low-profile stepper motors, timing belts, and servo-attached magnet that moves vertically to engage with the pieces. Early iterations used an electromagnet but the permanent magnet system was found to be smoother and more reliable. To enable users to also use manual moves instead of playing with only voice, a hall-effect sensor matrix was added directly under the pieces.
       </p>
       <SectionHeading level={3}>Hardware System Diagram</SectionHeading>
-      <div class="mt-8 flex justify-center">
+      <div class="mt-6 md:mt-8 flex justify-center">
         <img
           src={publicPath('RoboChess/Robo_diagram.webp')}
           alt="RoboChess System Diagram"
-          class="rounded-2xl w-[70%]"
+          class="rounded-2xl w-full md:w-[70%]"
         />
       </div>
     </section>
@@ -86,23 +86,23 @@ const processMedia = [
     <!-- Process Section -->
     <section id="process" class="section-content scroll-mt-32">
       <SectionHeading>Process</SectionHeading>
-      <p class="text-lg text-gray-300 leading-relaxed mb-8">
+      <p class="text-base md:text-lg text-gray-300 leading-relaxed mb-6 md:mb-8">
         Unfortunately, this project was poorly documented. The design and fabrication of this project was completed in full between October and December of 2022.
       </p>
-      <div class="grid grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         {processMedia.map((item) => (
           <div class={`space-y-2 ${item.fullSize ? '' : 'flex flex-col items-center'}`}>
             {item.type === 'video' ? (
               <video
                 src={publicPath(`RoboChess/${item.file}`)}
                 controls
-                class={`rounded-2xl ${item.fullSize ? 'w-full' : 'w-[70%]'}`}
+                class={`rounded-2xl ${item.fullSize ? 'w-full' : 'w-full md:w-[70%]'}`}
               ></video>
             ) : (
               <img
                 src={publicPath(`RoboChess/${item.file}`)}
                 alt={item.caption}
-                class={`rounded-2xl ${item.fullSize ? 'w-full' : 'w-[70%]'}`}
+                class={`rounded-2xl ${item.fullSize ? 'w-full' : 'w-full md:w-[70%]'}`}
               />
             )}
             <p class="text-sm text-gray-400 text-center">{item.caption}</p>
@@ -114,7 +114,7 @@ const processMedia = [
     <!-- Gallery Section -->
     <section id="gallery" class="section-content scroll-mt-32">
       <SectionHeading>Gallery</SectionHeading>
-      <div class="grid grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         {galleryImages.map((img) => (
           <img
             src={publicPath(`RoboChess/${img}`)}

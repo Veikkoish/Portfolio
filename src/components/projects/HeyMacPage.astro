@@ -14,16 +14,16 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<main class="container mx-auto px-8 py-12">
+<main class="container mx-auto px-4 md:px-8 py-8 md:py-12">
   <ProjectHeader title={project.title} year={project.year} inProgress={project.inProgress} />
   <ProjectMenu sections={['overview', 'technology', 'process', 'gallery']} />
 
-  <div class="max-w-6xl mx-auto space-y-24">
+  <div class="max-w-6xl mx-auto space-y-16 md:space-y-24">
     <!-- Overview Section -->
     <section id="overview" class="section-content scroll-mt-32">
-      <div class="space-y-16">
-        <div class="flex gap-12 items-center">
-          <div class="w-1/2">
+      <div class="space-y-10 md:space-y-16">
+        <div class="flex flex-col md:flex-row gap-6 md:gap-12 items-center">
+          <div class="w-full md:w-1/2">
             <video
               id="hey-mac-video"
               src={project.video}
@@ -32,8 +32,8 @@ const { project } = Astro.props;
               class="rounded-2xl w-full"
             ></video>
           </div>
-          <div class="w-1/2">
-            <p class="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+          <div class="w-full md:w-1/2">
+            <p class="text-base md:text-lg text-gray-300 leading-relaxed whitespace-pre-line">
               {project.overview?.[0]?.description || project.description}
             </p>
           </div>
@@ -44,12 +44,12 @@ const { project } = Astro.props;
     <!-- Technology Section -->
     <section id="technology" class="section-content scroll-mt-32">
       <SectionHeading>Technology</SectionHeading>
-      <div class="flex flex-wrap gap-3 mb-12">
+      <div class="flex flex-wrap gap-3 mb-8 md:mb-12">
         {project.skills.map((skill) => (
           <SkillTag name={skill.name} category={skill.category} />
         ))}
       </div>
-      <p class="text-lg text-gray-300 leading-relaxed">
+      <p class="text-base md:text-lg text-gray-300 leading-relaxed">
         The assistant uses Anthropic's models because they do well at maintaining character. Mac can answer difficult questions across any domain while keeping his personality consistent throughout conversations.
       </p>
     </section>
@@ -57,10 +57,10 @@ const { project } = Astro.props;
     <!-- Process Section -->
     <section id="process" class="section-content scroll-mt-32">
       <SectionHeading>Process</SectionHeading>
-      <p class="text-lg text-gray-300 leading-relaxed mb-8">
+      <p class="text-base md:text-lg text-gray-300 leading-relaxed mb-6 md:mb-8">
         The CAD portion of the project is done and the parts are currently being printed with resin. Meanwhile, I'm working on the iOS app. Once I have the prints, the surface finishing will take place to replicate the iMac G4 look.
       </p>
-      <div class="grid grid-cols-2 gap-6 mb-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
         <img
           src={publicPath('Hey Mac/cad1.webp')}
           alt="CAD model view 1"
@@ -82,16 +82,16 @@ const { project } = Astro.props;
           class="rounded-2xl w-full"
         />
       </div>
-      <div class="flex flex-col items-center space-y-4 mb-8">
+      <div class="flex flex-col items-center space-y-4 mb-6 md:mb-8">
         <video
           src={publicPath('Hey Mac/exp_tester.mov')}
           autoplay
           loop
           muted
           playsinline
-          class="rounded-2xl w-1/2"
+          class="rounded-2xl w-full md:w-1/2"
         ></video>
-        <p class="text-sm text-gray-400 text-center w-1/2">
+        <p class="text-sm text-gray-400 text-center w-full md:w-1/2">
           A Python tester for these custom SVG animations of different states to give Mac personality and visual expressivity. Still to come is animated mouth movement while speaking.
         </p>
       </div>

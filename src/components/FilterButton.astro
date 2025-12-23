@@ -11,7 +11,7 @@ const { category, label, color } = Astro.props;
 ---
 
 <button
-  class="filter-btn px-6 py-2 rounded-full font-medium transition-all duration-300 hover:scale-105"
+  class="filter-btn px-4 md:px-6 py-2 rounded-full text-sm md:text-base font-medium transition-all duration-300 hover:scale-105"
   data-category={category}
   style={color ? `--btn-color: ${color}` : undefined}
 >

@@ -13,7 +13,7 @@ const labels: Record<string, string> = {
 };
 ---
 
-<div class="flex justify-center gap-4 mb-16">
+<div class={`${sections.length === 4 ? 'grid grid-cols-2 max-w-xs mx-auto md:max-w-none md:flex md:flex-wrap' : 'flex flex-wrap'} justify-center gap-2 md:gap-4 mb-8 md:mb-16`}>
   {sections.map((section, index) => (
     <button 
       class={`menu-btn ${index === 0 ? 'active' : ''}`} 
@@ -26,15 +26,23 @@ const labels: Record<string, string> = {
 
 <style>
   .menu-btn {
-    padding: 0.75rem 2rem;
+    padding: 0.5rem 1rem;
     border-radius: 9999px;
     font-weight: 500;
+    font-size: 0.875rem;
     background-color: rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
     border: 2px solid transparent;
     text-decoration: none;
     display: inline-block;
     color: inherit;
+  }
+
+  @media (min-width: 768px) {
+    .menu-btn {
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+    }
   }
 
   .menu-btn:hover {
